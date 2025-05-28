@@ -1,0 +1,120 @@
+= 🧗Entraînement de l'agent
+:imagesdir: assets/default/images
+image::mi-training.png[]
+//mi-2
+
+== Terrain d’exercice : KinD
+
+* Un seul serveur
+* Docker
+
+image::kind-logo.png[width=45%]
+
+[NOTE.speaker]
+====
+Distribution Kubernetes
+* Kubernetes IN Docker
+
+📍 Pourquoi Kind ?
+* 🔁 Rapide à déployer
+* 🛠️ Idéal pour les tests et les expérimentations
+====
+
+== CI/CD : GitHub Action
+
+image::github-action.png[]
+
+[NOTE.speaker]
+====
+* Mission répétable à volonté
+* Automatisation totale
+  *  Chaque commit, chaque PR, déclenche un test de déploiement
+* "Gratuit"
+* VM temporaires avec 4 CPU pour simuler des missions
+* Tests en environnement contrôlé
+====
+
+== Infrastructure as code
+
+* Terraform / Opentofu
+* Pulumi
+* Crossplane
+
+[NOTE.speaker]
+====
+🧭 Mission : Créer, gérer et éliminer 511 clusters… sans faille.
+
+🎯 Objectif : Choisir l'outil idéal pour des déploiements
+
+🧰 Options du QG :
+  * Terraform / Opentofu
+  * Pulumi
+  * Crossplane
+
+🕶️ Décision :
+  * Pulumi
+====
+
+== Pulumi
+
+[source,python,linenums]
+----
+kind = local.Command("kindCluster",
+    create="kind create cluster --config kind.yaml --name cmesh1"
+)
+
+kind2 = local.Command("kindCluster2",
+    create="kind create cluster --config kind-2.yaml --name cmesh2"
+)
+
+cmesh1_provider = cilium.Provider("cmesh1", context="kind-cmesh1", opts=pulumi.ResourceOptions(depends_on=[kind]))
+cmesh2_provider = cilium.Provider("cmesh2", context="kind-cmesh2", opts=pulumi.ResourceOptions(depends_on=[kind2]))
+
+cmesh1_cilium = cilium.Install("cmesh1Install",
+    sets=[
+        "cluster.name=cmesh1",
+        "cluster.id=1",
+        "ipam.mode=kubernetes",
+    ],
+    version="1.15.5",
+    opts=pulumi.ResourceOptions(depends_on=[kind], providers=[cmesh1_provider]),
+)
+
+cmesh2_cilium = cilium.Install("cmesh2Install",
+    sets=[
+        "cluster.name=cmesh2",
+        "cluster.id=2",
+        "ipam.mode=kubernetes",
+    ],
+    version="1.15.5",
+    opts=pulumi.ResourceOptions(depends_on=[kind2], providers=[cmesh2_provider]),
+)
+
+cmesh1_cmeshenable = cilium.Clustermesh("cmesh1Enable", service_type="NodePort", opts=pulumi.ResourceOptions(depends_on=[cmesh1_cilium], providers=[cmesh1_provider]))
+cmesh2_cmeshenable = cilium.Clustermesh("cmesh2Enable", service_type="NodePort", opts=pulumi.ResourceOptions(depends_on=[cmesh2_cilium], providers=[cmesh2_provider]))
+
+cilium.ClustermeshConnection("cmeshConnect", destination_context="kind-cmesh2", opts=pulumi.ResourceOptions(depends_on=[cmesh1_cmeshenable], providers=[cmesh1_provider]))
+----
+
+
+[NOTE.speaker]
+====
+* Infra as real code
+* Python
+====
+
+== Limite de KinD
+
+Combien de clusters Kubernetes peut-on créer ?
+
+[NOTE.speaker]
+====
+🎛️ Matériel utilisé :
+  * 🖥️ 16 CPU — 🧠 32 Go de RAM
+
+🚫 Résultat :
+  * Blocage à 15 clusters maximum
+  * Temps de déploiement : 45 minutes
+
+💣 Bien trop long pour 511 clusters.
+====

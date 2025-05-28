@@ -1,0 +1,26 @@
+:imagesdir: assets/default/images
+
+= Identité
+
+image::mi-id.png[width=90%]
+//MI-1
+
+== !
+
+image::certifications.png[]
+
+[NOTE.speaker]
+====
+* Ingénieur cloud
+* Ambassadeur CNCF
+* Kubestronaute
+* Spécialisé dans la Cilium
+====
+
+== 🔍 Dossiers Classifiés 🔍
+
+* Blog tech dédié à eBPF et Cilium
+* Certification Cilium (CCA)
+* Provider Terraform pour déployer Cilium
+* Commits validés dans le repo officiel
+* Labs Champion

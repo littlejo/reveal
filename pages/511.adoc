@@ -1,0 +1,87 @@
+= 511 clusters
+:imagesdir: assets/default/images
+image::mi-511.png[]
+//mi-dead-reckoning
+
+== Comment se détacher de la limite AWS ?
+
+== 2 comptes
+
+== !
+
+image::511-2-accounts.svg[width=90%]
+
+== 7 comptes
+
+== !
+
+image::511-7-accounts.svg[width=55%]
+
+== 7 régions
+
+== !
+
+image::511-7-regions.svg[width=55%]
+
+== !
+
+image::511-7-regions-deployment.svg[width=80%]
+
+[NOTE.speaker]
+====
+* Un serveur de déploiement par région
+* Un principal qui va créer toute l'interconnexion AWS et l'interconnexion cilium
+* https://github.com/littlejo/pulumi-multi-region
+====
+
+== 💰 Pricing 💰
+
+== !
+
+[cols="1,1,1,1", options="header"]
+|===
+| Ressource | horaire | Quantité | 4h
+
+| Cluster EKS | 0,10 $ | 511 | 204,40 $
+| t4g.medium  | 0,0336 $ | 511 | 68,77 $
+| c5a.2xlarge  | 0,3080 $ | 6 | 7,39 $
+| c5a.16xlarge  | 2,464 $ | 1 | 9,86 $
+
+|===
+
+== !
+
+[cols="1,1,1,1", options="header"]
+|===
+| Ressource | horaire | Quantité | 4h
+
+| NAT Gw | 0,045 $ | 7 | 1,26 $
+| Transit Gw  | 0,10 $ | 7 | 2,80 $
+| Transit Gw Attachment  | 0,50 $ | 13 | 26,00 $
+| Total | | | 320,48 $
+
+|===
+
+== Coût 🕵️
+
+[cols="1,1,1,1", options="header"]
+|===
+| Ressource | Gb | Quantité | Estimation
+
+| NAT Gw | 0,045 $ | 511 | 22,995 $
+| Transit Gw  | 0,05 $ | 7 | 0,35 $
+|===
+
+== tests de 2 clusters par région
+
+== Les premiers tests sur 511 clusters 🤞
+
+image::511-terminal.png[width=70%]
+
+== Les premiers tests sur 511 clusters 😩
+
+image::511-excel.png[width=70%]
+
+== Dernier test
+
+

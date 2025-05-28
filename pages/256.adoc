@@ -1,0 +1,79 @@
+=  Objectif 256 clusters
+image::mi-256.png[]
+//mi-3
+
+== Passage à 128 clusters
+
+
+:imagesdir: assets/default/images
+image::eks-128.png[]
+
+[NOTE.speaker]
+====
+🧪 **3 essais** avant de réussir à passer ce cap symbolique
+
+Problème principal :
+* déploiement 128 clusters EKS en simultanée
+====
+
+== !
+
+[cols="1,1,1", options="header"]
+|===
+| Clusters | Déploiement | Connexions
+
+| pass:[<span style="color:gray;">32</span>]
+| pass:[<span style="color:gray;">17 minutes</span>]
+| pass:[<span style="color:gray;">5 minutes</span>]
+
+| pass:[<span style="color:gray;">64</span>]
+| pass:[<span style="color:gray;">15 minutes</span>]
+| pass:[<span style="color:gray;">2 minutes</span>]
+
+| pass:[<strong><span style="color:#3366cc;">128</span></strong>]
+| pass:[<strong><span style="color:#3366cc;">19 minutes</span></strong>]
+| pass:[<strong><span style="color:#3366cc;">2 minutes 30</span></strong>]
+|===
+
+[NOTE.speaker]
+====
+* **Temps des tests** : **environ 1 heure** 😅
+* Et pourtant, tout est **parallélisé**
+  * → Le facteur limitant :
+    * puissance des machines
+    * réseaux inter-clusters
+====
+
+== 🧨 Le mur des 256
+
+image::eks-256.png[]
+
+[NOTE.speaker]
+====
+* **5 essais** ont été nécessaires pour atteindre le sommet
+
+* Déployer **256 clusters en simultané** ?
+  → **Mission impossible**
+
+* Déploiement 128 en simultanée
+====
+
+== !
+
+[cols="1,1,1", options="header"]
+|===
+| Clusters | Déploiement | Connexions
+
+| pass:[<span style="color:gray;">64</span>]
+| pass:[<span style="color:gray;">15 minutes</span>]
+| pass:[<span style="color:gray;">2 minutes</span>]
+
+| pass:[<span style="color:gray;">128</span>]
+| pass:[<span style="color:gray;">19 minutes</span>]
+| pass:[<span style="color:gray;">2 minutes 30</span>]
+
+| pass:[<strong><span style="color:#3366cc;">256</span></strong>]
+| pass:[<strong><span style="color:#3366cc;">40 minutes</span></strong>]
+| pass:[<strong><span style="color:#3366cc;">4 minutes 30</span></strong>]
+
+|===
