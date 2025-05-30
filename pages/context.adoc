@@ -7,7 +7,7 @@ image::mi-briefing.png[]
 == 511 clusters Kubernetes
 :imagesdir: assets/default
 
-video::511-clusters.mp4[opts=autoplay,loop,muted,role=center,width=60%]
+video::511-clusters.mp4[opts="autoplay,loop,muted,nocontrols",role=center,width=60%]
 
 [NOTE.speaker]
 ====
@@ -131,10 +131,10 @@ Les agents cilium récupère les données de clustermesh-api
   * Cas 3 — A <= B : L’inverse, toujours à sens unique
 ====
 
-== Communication entre 511 clusters
+== Relier 511 clusters
 
 :imagesdir: assets/default
-video::511-clusters-connected.mp4[opts=autoplay,loop,muted,role=center,width=60%]
+video::511-clusters-connected.mp4[opts="autoplay,loop,muted,nocontrols",role=center,width=60%]
 
 [NOTE.speaker]
 ====
