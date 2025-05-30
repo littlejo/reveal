@@ -14,29 +14,45 @@ image::code-cilium-cli.png[width=80%]
 * ⚡ La CLI déclenche la connexion entre deux clusters
 ====
 
-== Algorithme d’interconnexion de 2 clusters
+== !
 
-* 📡 Extraction des données du cluster A
-* 📡 Extraction des données du cluster B
-* 🔧 Mise à jour de la config sur A
-* 🔧 Mise à jour de la config sur B
-
+image::deploy-connection-get-1.svg[width=50%]
 
 [NOTE.speaker]
 ====
 * 📡 Extraction des données de Cluster Mesh sur A
-* 📡 Extraction des données de Cluster Mesh sur B
-* 🔧 Mise à jour de la config sur A
-* 🔧 Mise à jour de la config sur B
+ça dure moins d'une seconde
+====
 
+== !
+
+image::deploy-connection-get-2.svg[width=50%]
+[NOTE.speaker]
+====
+* Idem pour l'autre cluster
+====
+
+== !
+
+image::deploy-connection-upgrade-1.svg[width=40%]
+[NOTE.speaker]
+====
+* 🔧 Mise à jour de la config sur A avec les données de l'autre cluster
+ça dure environ 7 secondes
+====
+
+== !
+
+image::deploy-connection-upgrade-2.svg[width=40%]
+[NOTE.speaker]
+====
+* Idem pour l'autre cluster
 🤔 "On peut paralléliser les helm upgrade, non ?"
 
 💥 Résultat : CPU en feu.
-
-* Généraliser l’algorithme pour N clusters.
 ====
 
-== Algorithme généralisé pour n clusters
+== Généralisation pour n clusters
 
 * 📡 Extraction des données (par cluster)
 * 🔧 Mise à jour de la config (par cluster)
