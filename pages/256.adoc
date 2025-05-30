@@ -4,7 +4,6 @@ image::mi-256.png[]
 
 == Passage à 128 clusters
 
-
 :imagesdir: assets/default/images
 image::eks-128.png[]
 
@@ -15,6 +14,10 @@ image::eks-128.png[]
 Problème principal :
 * déploiement 128 clusters EKS en simultanée
 ====
+
+== !
+
+image::128-clusters.apng[width=50%]
 
 == !
 
@@ -47,6 +50,10 @@ Problème principal :
 == 🧨 Le mur des 256
 
 image::eks-256.png[]
+
+== !
+
+image::256-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====

@@ -18,6 +18,7 @@ image::511-2-accounts.svg[width=90%]
 image::511-7-accounts.svg[width=55%]
 
 == 7 régions
+image::aws-map.png[]
 
 == !
 

@@ -54,6 +54,10 @@ image::pr.png[]
 
 == 🧪 **32 clusters**
 
+image::32-clusters.apng[width=50%]
+
+== !
+
 [cols="1,1", options="header"]
 |===
 | Étape | Durée
@@ -81,6 +85,10 @@ Avec 32 tâches en parallèle on pourrait créer les connexions de 511 clusters 
 ====
 
 == 🧪 **64 clusters**
+
+image::64-clusters.apng[width=50%]
+
+== !
 
 [cols="1,1,1", options="header"]
 |===
