@@ -10,7 +10,7 @@ cilium status
 cilium clustermesh status
 ----
 
-image::terminal-cilium-status.gif[width=90%]
+image::terminal-cilium-status.svg[]
 
 [NOTE.speaker]
 ====
