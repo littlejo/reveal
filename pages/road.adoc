@@ -1,17 +1,17 @@
 = 🚀 En route vers les 256 clusters
 :imagesdir: assets/default/images
 image::mi-plane.png[]
+[NOTE.speaker]
+====
+Maintenant qu'on a défini le terrain d'action et ses difficultés. Concentrons nous sur le problème principal.
+====
 
 == Création des connexions 🧨
 image::code-cilium-cli.png[width=80%]
 
 [NOTE.speaker]
 ====
-🛠️ Outils de l’agent :
-* 🧬 Pulumi pour l’Infra as Code
-* 🛡️ Provider custom : pulumi-cilium
-* 🧪 Le provider s’appuie sur les bibliothèques Go de la CLI Cilium
-* ⚡ La CLI déclenche la connexion entre deux clusters
+Voici le code principal de la création de connexion.
 ====
 
 == !
@@ -20,7 +20,7 @@ image::deploy-connection-get-1.svg[width=50%]
 
 [NOTE.speaker]
 ====
-* 📡 Extraction des données de Cluster Mesh sur A
+* 📡 Extraction des données de Cluster Mesh sur le premier cluster
 ça dure moins d'une seconde
 ====
 

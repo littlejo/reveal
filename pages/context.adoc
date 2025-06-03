@@ -3,6 +3,10 @@
 
 image::mi-briefing.png[]
 //mi-fallout
+[NOTE.speaker]
+====
+Nous allons maintenant entrer dans le cœur de la mission.
+====
 
 == 511 clusters Kubernetes
 :imagesdir: assets/default
@@ -13,10 +17,14 @@ video::511-clusters.mp4[opts="autoplay,loop,muted,nocontrols",role=center,width=
 ====
 * Kubernetes: orchestrateur de containeurs
 
+Notre objectif : en déployer 511.
+
+Mais il y a un ennemi dans l’ombre : le temps.
+
 🕒 Contraintes temporelles :
 * Durée de création d'un cluster: minimum 5 minutes
 
-🪂 Approche stratégique : y aller palier par palier
+🪂 Mais on ne fonce pas tête baissée : y aller palier par palier
 
 🛠️ Outils : Infrastructure As Code:
 * automatisation
@@ -30,10 +38,14 @@ image::cnis.png[]
 
 [NOTE.speaker]
 ====
-Objectif principal: Établir une communication entre containers sur des serveurs distincts.
+Objectif principal:
+
+* Donner le réseau aux cluster kubernetes
+* Établir une communication entre containers sur des serveurs distincts.
+
 * Technologies en présence :
-  * 🐆 Calico
-  * 🔁 Kube-router
+  * 🐆 Calico: le plus utilisé historiquement
+  * 🔁 Kube-router : minimaliste, BGP
   * 🧬 Cilium
 ====
 
@@ -65,13 +77,16 @@ image::cilium-paint.png[width=50%]
 
 [NOTE.speaker]
 ====
-Exemple de fonctionnalité :
+Maintenant, focus sur Cilium, l’outil central de cette mission.
+Exemple de capacité :
+
 * 👁️ Hubble — Observabilité réseau
 * 🔐 CNP & chiffrement — Zéro trust
 * 🧬 Service Mesh intégré
 * 🏎️ Suppression de kube-proxy
 
 Technologies embarquées :
+
 * eBPF: exécute du code dans le noyau à la volée
 ====
 
@@ -80,15 +95,19 @@ image::cilium-clustermesh.png[]
 
 [NOTE.speaker]
 ====
+
+La capacité principale de Cilium dans cette mission, c’est Cilium Cluster Mesh.
 🎯 Objectif :
-  * Permettre à des pods situés dans des clusters distants de se parler
-  * Pas de LoadBalancer
+
+* Permettre à des pods situés dans des clusters distants de se parler via un service global
+* Pas de LoadBalancer
 
 🚧 Conditions d’activation :
-  * 🔀 Réseaux de pods disjoints
-  * 🌍 Noeuds routables entre clusters
-  * ⛔ Limite classique : 255 clusters
-  * 🧪 Nouveauté 1.15 : 511 clusters possibles
+
+* 🔀 Réseaux de pods disjoints
+* 🌍 Noeuds routables entre clusters
+* ⛔ Limite classique : 255 clusters
+* 🧪 Nouveauté 1.15 : 511 clusters possibles
 ====
 
 == 2 clusters
@@ -96,7 +115,10 @@ image::cilium-clustermesh.png[]
 image::2-cluster-1.png[]
 [NOTE.speaker]
 ====
-2 clusters kubernetes avec les agents Cilium qui s'occupent du réseau
+2 clusters kubernetes sont représentés :
+
+* chacun a un control plane et deux workers
+* avec les agents Cilium qui s'occupent du réseau
 ====
 
 == Activation
@@ -106,9 +128,11 @@ image::2-cluster-2.svg[]
 [NOTE.speaker]
 ====
 Il y a deux phases pour la création d'un cluster mesh.
+
 phase 1 : activation.
- pod clustermesh-api : une base de données etcd qui récupère les données utiles pour le cluster mesh
- svc pointe sur le pod clustermesh-api : va permetre de récupérer les données de clustermesh-api
+
+* pod clustermesh-api : une base de données etcd qui récupère les données utiles pour le cluster mesh
+* svc pointe sur le pod clustermesh-api : va permetre de récupérer les données de clustermesh-api
 
 * Nodeport
 * loadbalancer
@@ -124,11 +148,6 @@ image::2-cluster-3.svg[]
 ====
 phase 2 : connexion
 Les agents cilium récupère les données de clustermesh-api
-
-* Configurations Mesh disponibles :
-  * Cas 1 — A <=> B : Communication bidirectionnelle
-  * Cas 2 — A => B : Un canal unilatéral
-  * Cas 3 — A <= B : L’inverse, toujours à sens unique
 ====
 
 == Relier 511 clusters
@@ -165,7 +184,8 @@ video::511-clusters-connected.mp4[opts="autoplay,loop,muted,nocontrols",role=cen
 
 [NOTE.speaker]
 ====
-* Création massive sous haute contrainte :
+Création massive sous haute contrainte :
+
 * ⏳ 4 heures chrono pour l’intégralité de l’opération.
 ====
 
@@ -194,12 +214,15 @@ video::511-clusters-connected.mp4[opts="autoplay,loop,muted,nocontrols",role=cen
 📹 Objectif : Documenter l'opération seconde par seconde
 
 🧰 Outils d’enregistrement :
+
 * 🖥️ asciinema : capture du terminal
 * 🎞️ asciinema-scene : rythme et tension
 
 Post-prod:
+
 * 🎬 Kdenlive : effets visuels et explication
 
 🌍 Diffusion :
+
 * 📡 Upload sur YouTube
 ====

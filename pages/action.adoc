@@ -2,17 +2,26 @@
 :imagesdir: assets/default/images
 image::mi-action.png[]
 //mi-4
+[NOTE.speaker]
+====
+Maintenant que notre environnement d'entraînement est en place, il est temps de définir le terrain d'action pour nos déploiements.
+====
 
 == Choix stratégique : AWS EKS
 
 [NOTE.speaker]
 ====
+AWS : Service cloud d'Amazon
+EKS : Service managé de Kubernetes
+
 🧭 Pourquoi EKS ?
+
 * ✅ maîtrise d'AWS et d'EKS
 * 🛡️ Confiance pour supporter 511 clusters
 * 🧪 Sandbox gratuite
 
 💰 Bonus d'infiltration :
+
 * 🔐 Des coupons spéciaux
 ====
 
@@ -48,13 +57,16 @@ image::service-quota.png[]
 * Anti-pattern complet ✅
 ====
 
-== Solution déployée
+== Architecture proposée
 
 image::aws-archi.svg[width=50%]
 
 [NOTE.speaker]
 ====
-🎯 Objectif : Créer, connecter et tester jusqu’à 256 clusters Kubernetes
+Voici l'architecture que j'ai mis au point pour essayer de déployer jusqu'à 256 clusters Kubernetes
+On a un compte AWS, un VPC, un réseau privé. À l'intérieur il contient 4 sous-réseaux 2 publics 2 privés
+Dans les sous-réseaux public il y a une NAT Gateway pour pouvoir télécharger les images des containers
+Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un control plane
 ====
 
 == Parallélisation des connexions
@@ -62,7 +74,13 @@ image::aws-archi.svg[width=50%]
 image::connection-answer.png[width=45%]
 [NOTE.speaker]
 ====
-Contrainte : Pas de création des connexions d'un même cluster en parallèle
+Une des principales difficultés de la mission est la création des connexions. Je vous présente la première tentative pour paralléliser les connexions.
+
+La contrainte : pas de création des connexions d'un même cluster en parallèle
+
+Ainsi avec cet algorithme, avec 6 clusters kubernetes on a 5 étapes.
+
+Avec cet algorithme, on passe d'une complexité de O(n2) à O(n).
 ====
 
 == 16 clusters
@@ -71,13 +89,17 @@ image::16-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
+Le test de 32 clusters a échoué, j'ai réduit la voilure à 16 clusters
+
 ❌ Mur technique détecté :
+
 * 📦 Trop d’objets Pulumi → explosion de la RAM 💥
 * 🔁 Connexions entre clusters → explosion du CPU
   * 1 connexion ≈ 1 CPU utilisé
   * 128 connexions = 128 CPUs ? 😅
 
 📉 Résultat :
+
 * ✅ 16 clusters connectés
 * ⏱️ 45 minutes…
 * 🚫 Bien trop long pour 511 clusters

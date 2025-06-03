@@ -14,7 +14,7 @@ image::certifications.png[]
 * Ingénieur cloud
 * Ambassadeur CNCF
 * Kubestronaute
-* Spécialisé dans la Cilium
+* Expert dans la technologie Cilium
 ====
 
 == 🔍 Dossiers Classifiés 🔍
@@ -24,3 +24,16 @@ image::certifications.png[]
 * Provider Terraform pour déployer Cilium
 * Commits validés dans le repo officiel
 * Labs Champion
+
+[NOTE.speaker]
+====
+Mes principaux faits d'armes
+
+* Je tiens un blog consacré à Cilium
+* J'ai contribué à la certification Cilium
+* J'ai développé un provider terraform pour déployer Cilium
+
+Ma mission actuelle :
+
+* Créer et connecter 511 clusters Kubernetes avec Cilium
+====

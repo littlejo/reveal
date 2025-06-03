@@ -2,6 +2,10 @@
 :imagesdir: assets/default/images
 image::mi-training.png[]
 //mi-2
+[NOTE.speaker]
+====
+Maintenant qu’on a bien cadré la mission, il est temps de parler entraînement.
+====
 
 == Terrain d’exercice : KinD
 
@@ -13,9 +17,11 @@ image::kind-logo.png[width=45%]
 [NOTE.speaker]
 ====
 Distribution Kubernetes
+
 * Kubernetes IN Docker
 
 📍 Pourquoi Kind ?
+
 * 🔁 Rapide à déployer
 * 🛠️ Idéal pour les tests et les expérimentations
 ====
@@ -47,12 +53,14 @@ image::github-action.png[]
 🎯 Objectif : Choisir l'outil idéal pour des déploiements
 
 🧰 Options du QG :
-  * Terraform / Opentofu
-  * Pulumi
-  * Crossplane
+
+* Terraform / Opentofu
+* Pulumi
+* Crossplane
 
 🕶️ Décision :
-  * Pulumi
+
+* Pulumi
 ====
 
 == Pulumi
@@ -103,9 +111,7 @@ cilium.ClustermeshConnection("cmeshConnect", destination_context="kind-cmesh2", 
 * Python
 ====
 
-== Limite de KinD
-
-Combien de clusters Kubernetes peut-on créer ?
+== Tester les limites de KinD
 
 [NOTE.speaker]
 ====
