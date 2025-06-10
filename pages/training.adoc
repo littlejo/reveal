@@ -112,6 +112,7 @@ cilium.ClustermeshConnection("cmeshConnect", destination_context="kind-cmesh2", 
 ====
 
 == Tester les limites de KinD
+image::15-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
