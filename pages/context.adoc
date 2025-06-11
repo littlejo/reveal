@@ -200,29 +200,3 @@ Création massive sous haute contrainte :
 💣 Détruire proprement
 
 🧼 Vérifier que rien n’a survécu
-
-== Briser le quatrième mur
-
-🎬 asciinema
-
-🎞️ Kdenlive
-
-🌍 YouTube
-
-[NOTE.speaker]
-====
-📹 Objectif : Documenter l'opération seconde par seconde
-
-🧰 Outils d’enregistrement :
-
-* 🖥️ asciinema : capture du terminal
-* 🎞️ asciinema-scene : rythme et tension
-
-Post-prod:
-
-* 🎬 Kdenlive : effets visuels et explication
-
-🌍 Diffusion :
-
-* 📡 Upload sur YouTube
-====
