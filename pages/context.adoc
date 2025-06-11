@@ -15,21 +15,15 @@ video::511-clusters.mp4[opts="autoplay,loop,muted,nocontrols",role=center,width=
 
 [NOTE.speaker]
 ====
-* Kubernetes: orchestrateur de containeurs
+Je pense que tout le monde connait ici Kubernetes: l'orchestrateur de containeurs.
 
 Notre objectif : en déployer 511.
 
-Mais il y a un ennemi dans l’ombre : le temps.
-
-🕒 Contraintes temporelles :
 * Durée de création d'un cluster: minimum 5 minutes
 
 🪂 Mais on ne fonce pas tête baissée : y aller palier par palier
 
-🛠️ Outils : Infrastructure As Code:
-* automatisation
-* répétitivité
-* changement du nombre de clusters rapide
+🛠️ Outils : Infrastructure As Code: automatisation | fiabilité | changement du nombre de clusters rapide
 ====
 
 == Plugin CNI
@@ -38,7 +32,7 @@ image::cnis.png[]
 
 [NOTE.speaker]
 ====
-Objectif principal:
+Créer les clusters, c’est une chose. Mais les faire communiquer entre eux, c’est un tout autre niveau. Pour ça, on entre dans un autre domaine : la couche réseau de Kubernetes. Et c’est là qu’interviennent les plugins CNI.
 
 * Donner le réseau aux cluster kubernetes
 * Établir une communication entre containers sur des serveurs distincts.
@@ -46,7 +40,7 @@ Objectif principal:
 * Technologies en présence :
   * 🐆 Calico: le plus utilisé historiquement
   * 🔁 Kube-router : minimaliste, BGP
-  * 🧬 Cilium
+  * 🧬 Cilium : eBPF
 ====
 
 == Kube-Proxy
@@ -54,13 +48,10 @@ image::kube-proxy.svg[]
 
 [NOTE.speaker]
 ====
-Objectif principal: Load balancer du réseau Kubernetes
+Les CNI donnent un réseau aux pods, leur permettent de se parler.
+Mais une autre question se pose : quand un pod envoie une requête vers un Service Kubernetes, comment sait-on où diriger ce trafic ?
 
-* Mode d’activation : Déclenché à la création d’une ressource *Service*
-* Technologie utilisée :
-  * Basé sur iptables
-  * ipvs (alternative plus performante)
-  * nftables (remplaçant imminent)
+Ce n’est pas kube-proxy qui route les paquets. Son rôle, c’est plutôt de programmer le noyau Linux à l’aide de iptables, ipvs ou bientôt nftables, pour que le trafic soit redirigé intelligemment.
 ====
 
 == Cilium
@@ -77,17 +68,15 @@ image::cilium-paint.png[width=50%]
 
 [NOTE.speaker]
 ====
-Maintenant, focus sur Cilium, l’outil central de cette mission.
-Exemple de capacité :
+On a parlé des principales couches réseaux de Kubernetes. Mettons maintenant en lumière le plugin CNI que nous allons utiliser pour cette mission.
 
-* 👁️ Hubble — Observabilité réseau
-* 🔐 CNP & chiffrement — Zéro trust
+Cilium ce n'est pas seulement un plugin CNI qui permet de donner le réseau à Kubernetes, il a de nombreuses capacités :
+
+* 👁️ Observabilité : Hubble
+* 🔐 Sécurité : CNP & chiffrement
 * 🧬 Service Mesh intégré
 * 🏎️ Suppression de kube-proxy
 
-Technologies embarquées :
-
-* eBPF: exécute du code dans le noyau à la volée
 ====
 
 == Cilium Cluster Mesh
@@ -96,11 +85,10 @@ image::cilium-clustermesh.png[]
 [NOTE.speaker]
 ====
 
-La capacité principale de Cilium dans cette mission, c’est Cilium Cluster Mesh.
-🎯 Objectif :
-
-* Permettre à des pods situés dans des clusters distants de se parler via un service global
-* Pas de LoadBalancer
+Nous avons parlé des fonctionnalités les plus utilisés.
+Mais pour cette mission en particulier, une autre fonctionnalité va jouer un rôle central.
+Celle qui va nous permettre de relier nos 511 clusters entre eux, comme s’ils ne faisaient qu’un :
+Cilium Cluster Mesh
 
 🚧 Conditions d’activation :
 
@@ -115,10 +103,19 @@ La capacité principale de Cilium dans cette mission, c’est Cilium Cluster Mes
 image::2-cluster-1.png[]
 [NOTE.speaker]
 ====
-2 clusters kubernetes sont représentés :
 
-* chacun a un control plane et deux workers
-* avec les agents Cilium qui s'occupent du réseau
+Mais avant d’orchestrer 511 clusters, commençons simple.
+
+Regardons comment fonctionne **Cilium Cluster Mesh** avec seulement **2 clusters**.
+
+Dans chaque cluster :
+
+* Un **control plane** et deux **nœuds workers**
+* Des agents **Cilium** tournent sur chaque nœud et gèrent le réseau
+
+Ce petit setup va nous permettre de comprendre les bases avant de passer à l’échelle.
+
+Il y a deux phases pour la création d'un cluster mesh.
 ====
 
 == Activation
@@ -127,16 +124,12 @@ image::2-cluster-2.svg[]
 
 [NOTE.speaker]
 ====
-Il y a deux phases pour la création d'un cluster mesh.
-
 phase 1 : activation.
 
 * pod clustermesh-api : une base de données etcd qui récupère les données utiles pour le cluster mesh
 * svc pointe sur le pod clustermesh-api : va permetre de récupérer les données de clustermesh-api
 
-* Nodeport
-* loadbalancer
-* clusterip
+* type de svc: Nodeport | loadbalancer | clusterip
 
 ====
 
@@ -147,7 +140,8 @@ image::2-cluster-3.svg[]
 [NOTE.speaker]
 ====
 phase 2 : connexion
-Les agents cilium récupère les données de clustermesh-api
+
+Les agents cilium récupère les données de clustermesh-api de l'autre cluster
 ====
 
 == Relier 511 clusters
@@ -157,23 +151,28 @@ video::511-clusters-connected.mp4[opts="autoplay,loop,muted,nocontrols",role=cen
 
 [NOTE.speaker]
 ====
-📈 Nombre total de communications à établir :
-  * 🧮 511×510/2 = 130 305 liens
-  * 🕒 Durée de création d’un lien : 15 secondes
-  * Temps total estimé : ⏱️ 542 heures (22 jours)
+On a vu comment relier 2 clusters.
 
-* Comment paralléliser ?
+Mais maintenant, **changement d’échelle** : **511 clusters** à connecter entre eux.
+
+📈 Nombre total de communications à établir :
+
+* 🧮 511×510/2 = 130 305 liens
+* 🕒 Durée de création d’un lien : 15 secondes
+* Temps total estimé : ⏱️ 542 heures (22 jours)
+
+* Parallélisation ?
 ====
 
 == Vérification de la communication
 
 [NOTE.speaker]
 ====
-🎯 s’assurer que la connexion est opérationnelle.
+Relier des clusters, c’est une chose.
+S’assurer qu’ils **peuvent réellement échanger des paquets**, c’en est une autre.
 
-* Ennemis à défier :
-  * ⏳ Temps de test long
-  * 🧩 Taille des serveurs réduite = ressources limitées
+C’est une étape souvent négligée.
+Mais pour une mission de cette ampleur, **elle est incontournable**.
 ====
 
 == Déroulé des opérations
@@ -184,9 +183,14 @@ video::511-clusters-connected.mp4[opts="autoplay,loop,muted,nocontrols",role=cen
 
 [NOTE.speaker]
 ====
-Création massive sous haute contrainte :
+On a vu toutes les étapes techniques et les défis.
 
-* ⏳ 4 heures chrono pour l’intégralité de l’opération.
+Maintenant, parlons du déroulé concret de la mission.
+
+Le budget est serré, impossible d’acheter 511 clusters Kubernetes.
+On va donc les **louer** dans le cloud.
+
+⏳ Le challenge ? Réaliser toute l’opération en **4 heures chrono**.
 ====
 
 == Déroulé de chaque opération
@@ -200,3 +204,14 @@ Création massive sous haute contrainte :
 💣 Détruire proprement
 
 🧼 Vérifier que rien n’a survécu
+
+[NOTE.speaker]
+====
+Comment va se dérouler chaque étape ?
+
+* Provisionner un grand nombre de clusters
+* Les connecter entre eux
+* Tester que la communication fonctionne
+* Tout détruire proprement
+* Et vérifier qu’aucune ressource n’a été oubliée
+====

@@ -11,6 +11,10 @@
 
 [.intro-block]
 image::cinema-front.jpg[width=50%]
+[NOTE.speaker]
+====
+* Merci d'assister à ma conférence
+====
 
 include::pages/start.adoc[leveloffset=+1]
 include::pages/context.adoc[leveloffset=+1]
