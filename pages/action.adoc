@@ -4,18 +4,17 @@ image::mi-action.png[]
 //mi-4
 [NOTE.speaker]
 ====
-Maintenant que notre environnement d'entraînement est en place, il est temps de définir le terrain d'action pour nos déploiements.
+Maintenant que notre environnement d'entraînement est en place, Il est temps maintenant de **passer à l’action**, sur le terrain réel.
 ====
 
 == Choix stratégique : AWS EKS
 
 [NOTE.speaker]
 ====
-AWS : Service cloud d'Amazon
+🧭 Premier choix décisif : **le terrain d’opération**.  
+Nous avons besoin d’une plateforme capable d’encaisser 511 clusters sans flancher.
 
-EKS : Service managé de Kubernetes
-
-🧭 Pourquoi EKS ?
+🎯 Cible retenue : **AWS EKS**
 
 * ✅ maîtrise d'AWS et d'EKS
 * 🛡️ Confiance pour supporter 511 clusters
@@ -27,32 +26,49 @@ image::service-quota.png[]
 
 [NOTE.speaker]
 ====
-📏 Réalité du terrain : impossible de créer plus de 100 clusters EKS
+💥 Premier obstacle : AWS bloque à **100 clusters max**.
 
-🗣️ Procédure d’obtention : Négociation avec AWS
+🎩 Tentative : négociation.
 
-⏳ Résultat : plusieurs semaines de pourparlers.
+⏳ Après plusieurs semaines : refus pour 511.
 
-🚪 Conclusion : AWS refuse 511 sur un seul compte
+✅ Résultat obtenu : **256 clusters** autorisés.
 
-✅ Solution trouvée : limite négociée à 256 clusters
+🔥 OK, AWS ne nous laisse pas faire 511 clusters.
+
+Mais honnêtement, après nos premiers tests qui bloquaient à **15 clusters**,  
+🎯 **256**, c’est déjà un sacré objectif.
+
+Et surtout, on n’est pas au bout de nos surprises…
+
+Parlons maintenant des **bonnes pratiques AWS**… et de la réalité terrain.
 ====
 
 == Bonnes pratiques vs Réalité opérationnelle
 
 [NOTE.speaker]
 ====
-💡 Recommandation officielle d’AWS : “Un VPC par cluster EKS”
+🧠 Je connais bien AWS. Même une certif pour le prouver.
 
-🚫 Limite réelle : “Max 5 VPCs par région.”
+📘 Selon les bonnes pratiques AWS, il faut :
+  * créer des Node Pools,
+  * qui créent des ASG,
+  * qui créent des EC2.
 
-🧨 Plan B activé : “Un seul VPC pour tous les clusters.”
+🚨 Sauf que tout ça prend un **temps fou**.
 
-🧩 Résultat :
-* Anti-pattern complet ✅
+Et dans une mission où chaque seconde compte,
+⏩ On coupe dans le gras.
+
+🎯 On va donc créer **directement des EC2**, sans Node Pool, sans ASG.
+
+C’est un anti-pattern ? Absolument.
+Mais c’est le seul moyen de rester dans la fenêtre de tir.
+
+👉 Allez, regardons maintenant l’architecture retenue pour aller jusqu’à 256 clusters.
 ====
 
-== Architecture proposée
+== Architecture retenue
 
 image::aws-archi.svg[width=50%]
 
@@ -66,7 +82,7 @@ Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un contr
 
 == Parallélisation des connexions
 
-image::connection-answer.png[width=45%]
+image::connection-answer.apng[width=45%]
 [NOTE.speaker]
 ====
 Une des principales difficultés de la mission est la création des connexions. Je vous présente la première tentative pour paralléliser les connexions.

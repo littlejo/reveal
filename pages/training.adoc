@@ -41,9 +41,7 @@ C’est pourquoi on automatise tout avec une pipeline CI/CD.
 
 == Infrastructure as code
 
-* Terraform / Opentofu
-* Pulumi
-* Crossplane
+image::iac.apng[]
 
 [NOTE.speaker]
 ====
