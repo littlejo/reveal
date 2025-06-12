@@ -4,7 +4,9 @@ image::mi-training.png[]
 //mi-2
 [NOTE.speaker]
 ====
-Maintenant qu’on a bien cadré la mission, il est temps de parler entraînement.
+Maintenant que la mission est bien définie, il est temps de passer à l’entraînement.
+
+Pour ça, on va se mettre en condition réelle… mais à petite échelle.
 ====
 
 == Terrain d’exercice : KinD
@@ -16,14 +18,9 @@ image::kind-logo.png[width=45%]
 
 [NOTE.speaker]
 ====
+On va utiliser un terrain d’exercice simple, efficace, et rapide à déployer : KinD, Kubernetes IN Docker.
+
 Distribution Kubernetes
-
-* Kubernetes IN Docker
-
-📍 Pourquoi Kind ?
-
-* 🔁 Rapide à déployer
-* 🛠️ Idéal pour les tests et les expérimentations
 ====
 
 == CI/CD : GitHub Action
@@ -32,12 +29,14 @@ image::github-action.png[]
 
 [NOTE.speaker]
 ====
-* Mission répétable à volonté
-* Automatisation totale
-  *  Chaque commit, chaque PR, déclenche un test de déploiement
+On a choisi KinD pour son côté léger et rapide, idéal pour simuler nos clusters sur un seul serveur.
+
+Mais répéter ces tests à la main serait fastidieux.
+
+C’est pourquoi on automatise tout avec une pipeline CI/CD.
+
 * "Gratuit"
 * VM temporaires avec 4 CPU pour simuler des missions
-* Tests en environnement contrôlé
 ====
 
 == Infrastructure as code
@@ -48,9 +47,12 @@ image::github-action.png[]
 
 [NOTE.speaker]
 ====
-🧭 Mission : Créer, gérer et éliminer 511 clusters… sans faille.
+GitHub Actions, c’est parfait pour rejouer nos tests automatiquement à chaque changement.
 
-🎯 Objectif : Choisir l'outil idéal pour des déploiements
+Mais il nous faut aussi un outil pour gérer **l’infrastructure elle-même** :
+Créer, connecter et détruire 511 clusters — sans intervention manuelle.
+
+C’est là qu’intervient l’**Infrastructure as Code**.
 
 🧰 Options du QG :
 
@@ -58,9 +60,6 @@ image::github-action.png[]
 * Pulumi
 * Crossplane
 
-🕶️ Décision :
-
-* Pulumi
 ====
 
 == Pulumi
@@ -107,8 +106,18 @@ cilium.ClustermeshConnection("cmeshConnect", destination_context="kind-cmesh2", 
 
 [NOTE.speaker]
 ====
-* Infra as real code
-* Python
+🕶️ Décision : Pulumi
+
+Pourquoi ?
+
+* Souplesse car c'est du code orienté développement
+* Apprendre autre chose que terraform : comparatif
+
+Autre choix :
+
+* langage de programmation
+
+🕶️ Décision : Python
 ====
 
 == Tester les limites de KinD
@@ -116,12 +125,16 @@ image::15-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
+Souvent, à la fin d’un entraînement, on cherche à **pousser les limites** des outils utilisés.
+
 🎛️ Matériel utilisé :
-  * 🖥️ 16 CPU — 🧠 32 Go de RAM
+
+* 🖥️ 16 CPU — 🧠 32 Go de RAM
 
 🚫 Résultat :
-  * Blocage à 15 clusters maximum
-  * Temps de déploiement : 45 minutes
+
+* Blocage à 15 clusters maximum
+* Temps de déploiement : 45 minutes
 
 💣 Bien trop long pour 511 clusters.
 ====

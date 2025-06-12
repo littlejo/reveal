@@ -12,17 +12,13 @@ Maintenant que notre environnement d'entraînement est en place, il est temps de
 [NOTE.speaker]
 ====
 AWS : Service cloud d'Amazon
+
 EKS : Service managé de Kubernetes
 
 🧭 Pourquoi EKS ?
 
 * ✅ maîtrise d'AWS et d'EKS
 * 🛡️ Confiance pour supporter 511 clusters
-* 🧪 Sandbox gratuite
-
-💰 Bonus d'infiltration :
-
-* 🔐 Des coupons spéciaux
 ====
 
 == Limites imposées par AWS
@@ -31,8 +27,7 @@ image::service-quota.png[]
 
 [NOTE.speaker]
 ====
-📏 Réalité du terrain :
-  * Impossible de créer plus de 100 clusters EKS
+📏 Réalité du terrain : impossible de créer plus de 100 clusters EKS
 
 🗣️ Procédure d’obtention : Négociation avec AWS
 

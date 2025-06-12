@@ -20,6 +20,7 @@ Je pense que tout le monde connait ici Kubernetes: l'orchestrateur de containeur
 Notre objectif : en déployer 511.
 
 * Durée de création d'un cluster: minimum 5 minutes
+* Séquentiel : 2 jours
 
 🪂 Mais on ne fonce pas tête baissée : y aller palier par palier
 
@@ -34,13 +35,16 @@ image::cnis.png[]
 ====
 Créer les clusters, c’est une chose. Mais les faire communiquer entre eux, c’est un tout autre niveau. Pour ça, on entre dans un autre domaine : la couche réseau de Kubernetes. Et c’est là qu’interviennent les plugins CNI.
 
+Objectif :
+
 * Donner le réseau aux cluster kubernetes
 * Établir une communication entre containers sur des serveurs distincts.
 
-* Technologies en présence :
-  * 🐆 Calico: le plus utilisé historiquement
-  * 🔁 Kube-router : minimaliste, BGP
-  * 🧬 Cilium : eBPF
+Technologies en présence :
+
+* 🐆 Calico: le plus utilisé historiquement
+* 🔁 Kube-router : minimaliste, BGP
+* 🧬 Cilium : eBPF
 ====
 
 == Kube-Proxy
@@ -48,10 +52,10 @@ image::kube-proxy.svg[]
 
 [NOTE.speaker]
 ====
-Les CNI donnent un réseau aux pods, leur permettent de se parler.
+Les plugins CNI donnent un réseau aux pods, leur permettent de se parler.
 Mais une autre question se pose : quand un pod envoie une requête vers un Service Kubernetes, comment sait-on où diriger ce trafic ?
 
-Ce n’est pas kube-proxy qui route les paquets. Son rôle, c’est plutôt de programmer le noyau Linux à l’aide de iptables, ipvs ou bientôt nftables, pour que le trafic soit redirigé intelligemment.
+Ce n’est pas kube-proxy qui route les paquets. Son rôle, c’est plutôt de programmer le noyau Linux à l’aide de iptables pour que le trafic soit redirigé intelligemment.
 ====
 
 == Cilium
@@ -124,7 +128,7 @@ image::2-cluster-2.svg[]
 
 [NOTE.speaker]
 ====
-phase 1 : activation.
+Phase 1 : activation.
 
 * pod clustermesh-api : une base de données etcd qui récupère les données utiles pour le cluster mesh
 * svc pointe sur le pod clustermesh-api : va permetre de récupérer les données de clustermesh-api
@@ -139,9 +143,9 @@ image::2-cluster-3.svg[]
 
 [NOTE.speaker]
 ====
-phase 2 : connexion
+Phase 2 : connexion
 
-Les agents cilium récupère les données de clustermesh-api de l'autre cluster
+Les agents cilium récupère les données de clustermesh-api de l'autre cluster.
 ====
 
 == Relier 511 clusters
@@ -153,7 +157,7 @@ video::511-clusters-connected.mp4[opts="autoplay,loop,muted,nocontrols",role=cen
 ====
 On a vu comment relier 2 clusters.
 
-Mais maintenant, **changement d’échelle** : **511 clusters** à connecter entre eux.
+Mais maintenant... **changement d’échelle** : **511 clusters** à connecter entre eux.
 
 📈 Nombre total de communications à établir :
 
@@ -169,10 +173,12 @@ Mais maintenant, **changement d’échelle** : **511 clusters** à connecter ent
 [NOTE.speaker]
 ====
 Relier des clusters, c’est une chose.
+
 S’assurer qu’ils **peuvent réellement échanger des paquets**, c’en est une autre.
 
 C’est une étape souvent négligée.
-Mais pour une mission de cette ampleur, **elle est incontournable**.
+
+Mais pour cette mission, **elle est incontournable**.
 ====
 
 == Déroulé des opérations
@@ -183,7 +189,7 @@ Mais pour une mission de cette ampleur, **elle est incontournable**.
 
 [NOTE.speaker]
 ====
-On a vu toutes les étapes techniques et les défis.
+On a vu toutes les étapes techniques et les défis à venir.
 
 Maintenant, parlons du déroulé concret de la mission.
 
