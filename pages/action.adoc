@@ -48,19 +48,21 @@ Parlons maintenant des **bonnes pratiques AWS**… et de la réalité terrain.
 
 [NOTE.speaker]
 ====
-🧠 Je connais bien AWS. Même une certif pour le prouver.
+En plus des limites, il faut bien faire attention à un autre paramètre : il ne faut pas suivre certaines bonnes pratiques AWS pour cette mission.
+
+Prenons un exemple.
 
 📘 Selon les bonnes pratiques AWS, il faut :
-  * créer des Node Pools,
-  * qui créent des ASG,
-  * qui créent des EC2.
+
+* créer des Node Pools,
+* qui créent des ASG,
+* qui créent des EC2.
 
 🚨 Sauf que tout ça prend un **temps fou**.
 
 Et dans une mission où chaque seconde compte,
-⏩ On coupe dans le gras.
 
-🎯 On va donc créer **directement des EC2**, sans Node Pool, sans ASG.
+🎯 On va créer **directement des EC2**, sans passer par les surcouches d'AWS.
 
 C’est un anti-pattern ? Absolument.
 Mais c’est le seul moyen de rester dans la fenêtre de tir.
@@ -74,10 +76,13 @@ image::aws-archi.svg[width=50%]
 
 [NOTE.speaker]
 ====
-Voici l'architecture que j'ai mis au point pour essayer de déployer jusqu'à 256 clusters Kubernetes
-On a un compte AWS, un VPC, un réseau privé. À l'intérieur il contient 4 sous-réseaux 2 publics 2 privés
-Dans les sous-réseaux public il y a une NAT Gateway pour pouvoir télécharger les images des containers
-Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un control plane
+Voici l'architecture que j'ai mis au point pour essayer de déployer jusqu'à 256 clusters Kubernetes.
+
+On a un compte AWS, un VPC, un réseau privé. À l'intérieur il contient 4 sous-réseaux 2 publics 2 privés.
+
+Dans les sous-réseaux public il y a une NAT Gateway pour pouvoir télécharger les images des containers depuis les sous-réseaux privés.
+
+Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un control plane.
 ====
 
 == Parallélisation des connexions
@@ -94,12 +99,18 @@ Ainsi avec cet algorithme, avec 6 clusters kubernetes on a 5 étapes.
 Avec cet algorithme, on passe d'une complexité de O(n2) à O(n).
 ====
 
+== 32 clusters
+
+image::mission_failed.apng[width=50%]
+
 == 16 clusters
 
 image::16-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
+Maintenant qu'on défini le terrain d'action et toutes ses contraintes, il est temps de faire une première opération.
+
 Le test de 32 clusters a échoué, j'ai réduit la voilure à 16 clusters
 
 ❌ Mur technique détecté :

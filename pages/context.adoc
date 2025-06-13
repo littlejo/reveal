@@ -19,7 +19,9 @@ Je pense que tout le monde connait ici Kubernetes: l'orchestrateur de containeur
 
 Notre objectif : en déployer 511.
 
-* Durée de création d'un cluster: minimum 5 minutes
+Combien de temps va durer ce déploiement ?
+
+* Pour un cluster: minimum 5 minutes
 * Séquentiel : 2 jours
 
 🪂 Mais on ne fonce pas tête baissée : y aller palier par palier

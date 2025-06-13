@@ -35,8 +35,12 @@ Mais répéter ces tests à la main serait fastidieux.
 
 C’est pourquoi on automatise tout avec une pipeline CI/CD.
 
+Pourquoi utiliser GitHub action ?
+
 * "Gratuit"
 * VM temporaires avec 4 CPU pour simuler des missions
+
+=> déploiement possible jusqu'à 14 clusters
 ====
 
 == Infrastructure as code
@@ -131,8 +135,7 @@ Souvent, à la fin d’un entraînement, on cherche à **pousser les limites** d
 
 🚫 Résultat :
 
-* Blocage à 15 clusters maximum
+* Blocage à 15 clusters maximum contre 14 pour GitHub Action
 * Temps de déploiement : 45 minutes
 
-💣 Bien trop long pour 511 clusters.
 ====
