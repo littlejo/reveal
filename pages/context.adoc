@@ -23,10 +23,12 @@ Combien de temps va durer ce déploiement ?
 
 * Pour un cluster: minimum 5 minutes
 * Séquentiel : 2 jours
+* Parallélisation
+
+🛠️ Outils : Infrastructure As Code: automatisation | fiabilité | changement du nombre de clusters rapide
 
 🪂 Mais on ne fonce pas tête baissée : y aller palier par palier
 
-🛠️ Outils : Infrastructure As Code: automatisation | fiabilité | changement du nombre de clusters rapide
 ====
 
 == Plugin CNI
@@ -42,7 +44,9 @@ Objectif :
 * Donner le réseau aux cluster kubernetes
 * Établir une communication entre containers sur des serveurs distincts.
 
-Technologies en présence :
+Pas de plugin CNI par défaut
+
+Exemples :
 
 * 🐆 Calico: le plus utilisé historiquement
 * 🔁 Kube-router : minimaliste, BGP

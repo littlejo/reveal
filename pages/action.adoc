@@ -39,8 +39,6 @@ image::service-quota.png[]
 Mais honnêtement, après nos premiers tests qui bloquaient à **15 clusters**,  
 🎯 **256**, c’est déjà un sacré objectif.
 
-Et surtout, on n’est pas au bout de nos surprises…
-
 Parlons maintenant des **bonnes pratiques AWS**… et de la réalité terrain.
 ====
 
@@ -50,11 +48,11 @@ image::nodepool.apng[width=60%]
 
 [NOTE.speaker]
 ====
-En plus des limites, il faut bien faire attention à un autre paramètre : il ne faut pas suivre certaines bonnes pratiques AWS pour cette mission.
+Il faut bien faire attention à un autre paramètre : il ne faut pas suivre certaines bonnes pratiques AWS pour cette mission.
 
 Prenons un exemple.
 
-📘 Selon les bonnes pratiques AWS, il faut :
+📘 Selon les bonnes pratiques AWS, pour créer des workers EKS, il faut :
 
 * créer des Node Pools,
 * qui créent des ASG,
@@ -98,12 +96,27 @@ La contrainte : pas de création des connexions d'un même cluster en parallèle
 
 Ainsi avec cet algorithme, avec 6 clusters kubernetes on a 5 étapes.
 
-Avec cet algorithme, on passe d'une complexité de O(n2) à O(n).
+On passe donc d'une complexité de O(n2) à O(n).
 ====
 
 == 32 clusters
 
 image::mission_failed.apng[width=50%]
+
+[NOTE.speaker]
+====
+Maintenant qu'on défini le terrain d'action et toutes ses contraintes, il est temps de faire une première opération.
+
+Le test de 32 clusters a échoué
+
+❌ Mur technique détecté :
+
+* 📦 Trop d’objets Pulumi
+* n x n-1 / 2 objets pour créer les connexion
+* explosion de la RAM 💥
+
+Je dois réduire la voilure à 16 clusters
+====
 
 == 16 clusters
 
@@ -111,16 +124,10 @@ image::16-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
-Maintenant qu'on défini le terrain d'action et toutes ses contraintes, il est temps de faire une première opération.
+🔁 Connexions entre clusters → explosion du CPU
 
-Le test de 32 clusters a échoué, j'ai réduit la voilure à 16 clusters
-
-❌ Mur technique détecté :
-
-* 📦 Trop d’objets Pulumi → explosion de la RAM 💥
-* 🔁 Connexions entre clusters → explosion du CPU
-  * 1 connexion ≈ 1 CPU utilisé
-  * 128 connexions = 128 CPUs ? 😅
+* 1 connexion ≈ 1 CPU utilisé
+* 128 connexions = 128 CPUs ? 😅
 
 📉 Résultat :
 
@@ -128,6 +135,5 @@ Le test de 32 clusters a échoué, j'ai réduit la voilure à 16 clusters
 * ⏱️ 45 minutes…
 * 🚫 Bien trop long pour 511 clusters
 
-💡 Conclusion :
-    Il faut une autre stratégie de connexion.
+* Il faut une autre stratégie de connexion pour aller plus loin.
 ====

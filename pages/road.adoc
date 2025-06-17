@@ -11,7 +11,11 @@ image::code-cilium-cli.png[width=80%]
 
 [NOTE.speaker]
 ====
+Les connexions.
+
 Voici le code principal de la création de connexion.
+
+Nous allons expliquer comment fonctionne ce bout de code.
 ====
 
 == !
@@ -20,8 +24,9 @@ image::deploy-connection-get-1.svg[width=50%]
 
 [NOTE.speaker]
 ====
-* 📡 Extraction des données de Cluster Mesh sur le premier cluster
-ça dure moins d'une seconde
+* 📡 Extraction des données de Cluster Mesh sur le cluster rouge.
+* C'est l'équivalent d'un kubectl get en langage Go
+* Cette étape dure moins d'une seconde
 ====
 
 == !
@@ -29,7 +34,7 @@ image::deploy-connection-get-1.svg[width=50%]
 image::deploy-connection-get-2.svg[width=50%]
 [NOTE.speaker]
 ====
-* Idem pour l'autre cluster
+* Idem pour le cluster jaune
 ====
 
 == !
@@ -37,8 +42,9 @@ image::deploy-connection-get-2.svg[width=50%]
 image::deploy-connection-upgrade-1.svg[width=40%]
 [NOTE.speaker]
 ====
-* 🔧 Mise à jour de la config sur A avec les données de l'autre cluster
-ça dure environ 7 secondes
+* 🔧 Mise à jour de la config sur le cluster rouge avec les données du cluster jaune
+* C'est l'équivalent d'un helm upgrade en langage Go
+* Cette étape dure environ 7 secondes
 ====
 
 == !
@@ -46,7 +52,8 @@ image::deploy-connection-upgrade-1.svg[width=40%]
 image::deploy-connection-upgrade-2.svg[width=40%]
 [NOTE.speaker]
 ====
-* Idem pour l'autre cluster
+* Idem pour cluster le cluster rouge
+
 🤔 "On peut paralléliser les helm upgrade, non ?"
 
 💥 Résultat : CPU en feu.
@@ -59,7 +66,11 @@ image::deploy-connection-upgrade-2.svg[width=40%]
 
 [NOTE.speaker]
 ====
-🎯 Objectif : Connecter N clusters efficacement
+Il faut plutôt généraliser la méthode pour n clusters que pour seulement 2 clusters :
+* On va récupérer les données de tous les clusters
+* On va mettre à jour le premier clusters avec les données des autres clusters
+* On va mettre à jour le deuxième clusters avec les données des autres clusters
+* Etc
 
 En théorie : pour 511 clusters on metterait environ une heure
 ====
@@ -68,9 +79,19 @@ En théorie : pour 511 clusters on metterait environ une heure
 
 image::pr.png[]
 
+[NOTE.speaker]
+====
+C'est l'objectif de cette PR.
+====
+
 == 🧪 **32 clusters**
 
 image::32-clusters.apng[width=50%]
+
+[NOTE.speaker]
+====
+Maintenant que la PR a été mergé, nous allons pouvoir tester cela sur un nombre important de clusters : 32.
+====
 
 == !
 
@@ -88,7 +109,9 @@ image::32-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
-🎯 Mise en œuvre de l’algorithme séquentiel sur une flotte de 32 clusters.
+Voici les résultats du déploiement.
+
+Cependant je n'étais pas totalement satisfait. Les helm upgrade prennent beaucoup de temps. Pourquoi ne pas les paralléliser de façon mesurée.
 ====
 
 == Parallélisation
@@ -97,7 +120,9 @@ image::pr-2.png[]
 
 [NOTE.speaker]
 ====
-Avec 32 tâches en parallèle on pourrait créer les connexions de 511 clusters en moins de 3 minutes
+En théorie : avec 32 tâches en parallèle on pourrait créer les connexions de 511 clusters en moins de 3 minutes
+
+Testons maintenant sur 64 clusters...
 ====
 
 == 🧪 **64 clusters**

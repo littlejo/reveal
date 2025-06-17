@@ -2,6 +2,11 @@
 image::mi-256.png[]
 //mi-3
 
+[NOTE.speaker]
+====
+On a un outil pour vérifier la connectivité des clusters. On va maintenant vérifier sur un grand nombre de cluster.
+====
+
 == Passage à 128 clusters
 
 :imagesdir: assets/default/images
@@ -9,15 +14,22 @@ image::eks-128.png[]
 
 [NOTE.speaker]
 ====
-🧪 **3 essais** avant de réussir à passer ce cap symbolique
-
-Problème principal :
-* déploiement 128 clusters EKS en simultanée
+Nous avons réussi à déployer 64 clusters. Passons maintenant à 128.
 ====
 
 == !
 
 image::128-clusters.apng[width=50%]
+
+[NOTE.speaker]
+====
+🧪 **3 essais** avant de réussir à passer ce cap symbolique
+
+Problème principal :
+
+* déploiement 128 clusters EKS en simultanée
+* **Temps des tests** : **environ 1 heure** 😅
+====
 
 == !
 
@@ -40,16 +52,15 @@ image::128-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
-* **Temps des tests** : **environ 1 heure** 😅
-* Et pourtant, tout est **parallélisé**
-  * → Le facteur limitant :
-    * puissance des machines
-    * réseaux inter-clusters
 ====
 
 == 🧨 Le mur des 256
 
 image::eks-256.png[]
+[NOTE.speaker]
+====
+* Passons maintenant à 256 clusters.
+====
 
 == !
 
@@ -61,8 +72,11 @@ image::256-clusters.apng[width=50%]
 
 * Déployer **256 clusters en simultané** ?
   → **Mission impossible**
-
 * Déploiement 128 en simultanée
+
+* Au 3ème essaie tout fonctionnait jusqu'à l'épreuve de la création des connexions.
+* Au moment de la création de connexion, ça a planté. Pourquoi parce que ça créait un secret qui avait une taille > 1 Mo
+* La résolution est un peu technique tout est détaillé sur le blog.
 ====
 
 == !

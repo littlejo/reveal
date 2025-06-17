@@ -56,8 +56,6 @@ Créer, connecter et détruire 511 clusters — sans intervention manuelle.
 
 C’est là qu’intervient l’**Infrastructure as Code**.
 
-🧰 Options du QG :
-
 * Terraform / Opentofu
 * Pulumi
 * Crossplane
@@ -67,6 +65,16 @@ C’est là qu’intervient l’**Infrastructure as Code**.
 == Pulumi
 
 image::pulumi.gif[width=70%]
+
+[NOTE.speaker]
+====
+🕶️ Décision : Pulumi
+
+Pourquoi ?
+
+* Souplesse car c'est du code orienté développement
+* Apprendre autre chose que terraform : comparatif
+====
 
 == Pulumi
 
@@ -112,15 +120,6 @@ cilium.ClustermeshConnection("cmeshConnect", destination_context="kind-cmesh2", 
 
 [NOTE.speaker]
 ====
-🕶️ Décision : Pulumi
-
-Pourquoi ?
-
-* Souplesse car c'est du code orienté développement
-* Apprendre autre chose que terraform : comparatif
-
-Autre choix :
-
 * langage de programmation
 
 🕶️ Décision : Python
