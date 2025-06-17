@@ -203,15 +203,9 @@ On va donc les **louer** dans le cloud.
 
 == Déroulé de chaque opération
 
-🚀 Provisionner les 511 clusters
+:imagesdir: assets/default/images
 
-🔗 Connecter chacun à tous les autres
-
-🧪 Tester la communication
-
-💣 Détruire proprement
-
-🧼 Vérifier que rien n’a survécu
+image::32-clusters-deroule.apng[width=50%]
 
 [NOTE.speaker]
 ====
@@ -220,6 +214,5 @@ Comment va se dérouler chaque étape ?
 * Provisionner un grand nombre de clusters
 * Les connecter entre eux
 * Tester que la communication fonctionne
-* Tout détruire proprement
-* Et vérifier qu’aucune ressource n’a été oubliée
+* Tout va s'auto-détruire
 ====

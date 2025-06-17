@@ -66,6 +66,10 @@ C’est là qu’intervient l’**Infrastructure as Code**.
 
 == Pulumi
 
+image::pulumi.gif[width=70%]
+
+== Pulumi
+
 [source,python,linenums]
 ----
 kind = local.Command("kindCluster",

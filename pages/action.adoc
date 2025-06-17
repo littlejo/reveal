@@ -46,6 +46,8 @@ Parlons maintenant des **bonnes pratiques AWS**… et de la réalité terrain.
 
 == Bonnes pratiques vs Réalité opérationnelle
 
+image::nodepool.apng[width=60%]
+
 [NOTE.speaker]
 ====
 En plus des limites, il faut bien faire attention à un autre paramètre : il ne faut pas suivre certaines bonnes pratiques AWS pour cette mission.
