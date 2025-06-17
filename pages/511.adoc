@@ -40,6 +40,7 @@ Cette solution m'a refroidi avec les soucis de déploiement que j'avais eu avec 
 [NOTE.speaker]
 ====
 J'ai ensuite pensé à le faire sur 7 comptes AWS différents :
+
 * 511 / 7 = 73 clusters par comptes
 ====
 
