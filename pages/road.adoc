@@ -67,6 +67,7 @@ image::deploy-connection-upgrade-2.svg[width=40%]
 [NOTE.speaker]
 ====
 Il faut plutôt généraliser la méthode pour n clusters que pour seulement 2 clusters :
+
 * On va récupérer les données de tous les clusters
 * On va mettre à jour le premier clusters avec les données des autres clusters
 * On va mettre à jour le deuxième clusters avec les données des autres clusters

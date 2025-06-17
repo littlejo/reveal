@@ -117,14 +117,14 @@ Les prix dépendent de la région où l'on déploie. Donc c'est probablement un 
 | Transit Gw  | 0,10 $ | 7 | 2,80 $
 | Transit Gw Attachment  | 0,50 $ | 13 | 26,00 $
 | Total | | | 320,48 $
+|===
+
 [NOTE.speaker]
 ====
 Au niveau des ressources réseaux, on a ...
 
 Ce qui nous fait un total de 320 $
 ====
-
-|===
 
 == Coût 🕵️
 
