@@ -67,7 +67,7 @@ Nous allons créer un cluster mesh sur 7 régions AWS.
 image::511-7-regions.svg[width=55%]
 [NOTE.speaker]
 ====
-A priori l'architecture est similaire : on duplique l'architecture sur les différentes régions. Mais il faut créer une tgw par région et les connecter avec des tgw connect.
+A priori l'architecture est similaire : on duplique l'architecture sur les différentes régions. Mais il faut créer une tgw par région et les connecter avec des tgw attachment.
 ====
 
 == !
@@ -79,8 +79,6 @@ image::511-7-regions-deployment.svg[width=80%]
 On a maintenant choisi l'architecture. Mais comment déployer cela ?
 
 Créer un serveur de déploiement par région dont un serveur dédié à la connectivité : transit gateway et cilium cluster mesh
-
-On a maintenant tous les éléments pour effectuer le déploiement.
 ====
 
 == 💰 Pricing 💰

@@ -3,7 +3,7 @@
 image::mi-plane.png[]
 [NOTE.speaker]
 ====
-Maintenant qu'on a défini le terrain d'action et ses difficultés. Concentrons nous sur le problème principal.
+Maintenant qu'on a défini le terrain d'action et ses difficultés. Concentrons nous sur le problème principal pour aller jusqu'à 256 clusters.
 ====
 
 == Création des connexions 🧨
@@ -121,14 +121,22 @@ image::pr-2.png[]
 
 [NOTE.speaker]
 ====
+C'est l'objet de cette PR.
+
 En théorie : avec 32 tâches en parallèle on pourrait créer les connexions de 511 clusters en moins de 3 minutes
 
-Testons maintenant sur 64 clusters...
+Maintenant que la PR est mergé, on va tester cela sur 64 clusters.
 ====
 
 == 🧪 **64 clusters**
 
 image::64-clusters.apng[width=50%]
+
+[NOTE.speaker]
+====
+Le déploiement s'est également bien passé avec 64 clusters en parallélisant 7 fois la tâche des helm upgrade.
+
+====
 
 == !
 

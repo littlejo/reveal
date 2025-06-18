@@ -90,13 +90,17 @@ Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un contr
 image::connection-answer.apng[width=45%]
 [NOTE.speaker]
 ====
-Une des principales difficultés de la mission est la création des connexions. Je vous présente la première tentative pour paralléliser les connexions.
+On a vu l'architecture AWS qu'on va mettre en place. Mais il reste le problème des connexions Cilium.
+
+Je vous présente la première tentative pour paralléliser les connexions.
 
 La contrainte : pas de création des connexions d'un même cluster en parallèle
 
 Ainsi avec cet algorithme, avec 6 clusters kubernetes on a 5 étapes.
 
 On passe donc d'une complexité de O(n2) à O(n).
+
+On va maintenant pouvoir tester cette parallélisation sur 32 clusters Kubernetes.
 ====
 
 == 32 clusters
@@ -105,8 +109,6 @@ image::mission_failed.apng[width=50%]
 
 [NOTE.speaker]
 ====
-Maintenant qu'on défini le terrain d'action et toutes ses contraintes, il est temps de faire une première opération.
-
 Le test de 32 clusters a échoué
 
 ❌ Mur technique détecté :
@@ -115,7 +117,7 @@ Le test de 32 clusters a échoué
 * n x n-1 / 2 objets pour créer les connexion
 * explosion de la RAM 💥
 
-Je dois réduire la voilure à 16 clusters
+Je vais réduire à 16 clusters
 ====
 
 == 16 clusters
@@ -124,16 +126,17 @@ image::16-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
-🔁 Connexions entre clusters → explosion du CPU
-
-* 1 connexion ≈ 1 CPU utilisé
-* 128 connexions = 128 CPUs ? 😅
-
 📉 Résultat :
 
 * ✅ 16 clusters connectés
 * ⏱️ 45 minutes…
 * 🚫 Bien trop long pour 511 clusters
+
+🔁 Connexions entre clusters → explosion du CPU
+
+* 1 connexion ≈ 1 CPU utilisé
+* 128 connexions = 128 CPUs ? 😅
+
 
 * Il faut une autre stratégie de connexion pour aller plus loin.
 ====
