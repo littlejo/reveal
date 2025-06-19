@@ -74,7 +74,7 @@ Ce n’est pas kube-proxy qui route les paquets. Son rôle, c’est plutôt de p
 
 🏎️ Suppression de kube-proxy
 
-image::cilium-paint.png[width=50%]
+image::cilium-paint-2.png[width=35%]
 
 [NOTE.speaker]
 ====
@@ -175,6 +175,9 @@ Mais maintenant... **changement d’échelle** : **511 clusters** à connecter e
 ====
 
 == Vérification de la communication
+:imagesdir: assets/default/images
+
+image::cilium-paint-3.png[width=35%]
 
 [NOTE.speaker]
 ====
