@@ -19,7 +19,7 @@ Nous avons réussi à déployer 64 clusters. Passons maintenant à 128.
 
 == !
 
-image::128-clusters.apng[width=50%]
+image::128-clusters.apng[width=70%]
 
 [NOTE.speaker]
 ====
@@ -63,7 +63,7 @@ image::eks-256.png[]
 
 == !
 
-image::256-clusters.apng[width=50%]
+image::256-clusters.apng[width=70%]
 
 [NOTE.speaker]
 ====
