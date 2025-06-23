@@ -52,7 +52,7 @@ image::deploy-connection-upgrade-1.svg[width=40%]
 image::deploy-connection-upgrade-2.svg[width=40%]
 [NOTE.speaker]
 ====
-* Idem pour cluster le cluster rouge
+* Idem pour le cluster jaune
 
 🤔 "On peut paralléliser les helm upgrade, non ?"
 
@@ -73,7 +73,6 @@ Il faut plutôt généraliser la méthode pour n clusters que pour seulement 2 c
 * On va mettre à jour le deuxième clusters avec les données des autres clusters
 * Etc
 
-En théorie : pour 511 clusters on mettrait environ une heure
 ====
 
 == La Pull Request
@@ -83,6 +82,8 @@ image::pr.png[]
 [NOTE.speaker]
 ====
 C'est l'objectif de cette PR.
+
+En théorie : pour 511 clusters on mettrait environ une heure
 ====
 
 == 🧪 **32 clusters**
