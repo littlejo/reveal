@@ -58,10 +58,15 @@ image::kube-proxy.svg[]
 
 [NOTE.speaker]
 ====
-Les plugins CNI donnent un réseau aux pods, leur permettent de se parler.
-Mais une autre question se pose : quand un pod envoie une requête vers un Service Kubernetes, comment sait-on où diriger ce trafic ?
+Les plugins CNI donnent un réseau aux pods.
 
-Ce n’est pas kube-proxy qui route les paquets. Son rôle, c’est plutôt de programmer le noyau Linux à l’aide de iptables pour que le trafic soit redirigé intelligemment.
+Les pods sont éphémères. Leur adresse IP change. Or, les applications ont besoin d’un point d’entrée stable pour communiquer avec ces pods, peu importe où ils tournent.
+
+👉 C’est le rôle des Services : fournir une IP fixe vers un groupe de pods.
+
+Ce n’est pas kube-proxy qui route les paquets à proprement parler. Son rôle, c’est plutôt de programmer le noyau Linux à l’aide de iptables pour que le trafic soit redirigé vers les bons pods.
+
+On a maintenant parlé des principales briques réseau de Kubernetes. Parlons du plugin CNI que nous allons utiliser pour cette mission.
 ====
 
 == Cilium
@@ -78,8 +83,6 @@ image::cilium-paint-2.png[width=35%]
 
 [NOTE.speaker]
 ====
-On a parlé des principales couches réseaux de Kubernetes. Mettons maintenant en lumière le plugin CNI que nous allons utiliser pour cette mission.
-
 Cilium ce n'est pas seulement un plugin CNI qui permet de donner le réseau à Kubernetes, il a de nombreuses capacités :
 
 * 👁️ Observabilité : Hubble
@@ -136,8 +139,8 @@ image::2-cluster-2.svg[]
 ====
 Phase 1 : activation.
 
-* pod clustermesh-api : une base de données etcd qui récupère les données utiles pour le cluster mesh
-* svc pointe sur le pod clustermesh-api : va permetre de récupérer les données de clustermesh-api
+* pod cilium-clustermesh-api : une base de données etcd qui récupère les données utiles pour le cluster mesh
+* svc pointe sur le pod cilium-clustermesh-api
 
 * type de svc: Nodeport | loadbalancer | clusterip
 
@@ -151,7 +154,7 @@ image::2-cluster-3.svg[]
 ====
 Phase 2 : connexion
 
-Les agents cilium récupère les données de clustermesh-api de l'autre cluster.
+Les agents cilium récupère les données de cilium-clustermesh-api de l'autre cluster.
 ====
 
 == Relier 511 clusters

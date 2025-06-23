@@ -35,5 +35,5 @@ Mes principaux faits d'armes
 
 Ma mission actuelle :
 
-* Créer et connecter 511 clusters Kubernetes avec Cilium
+* Créer 511 clusters Kubernetes et de les connecter avec Cilium
 ====

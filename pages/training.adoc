@@ -21,6 +21,9 @@ image::kind-logo.png[width=45%]
 On va utiliser un terrain d’exercice simple, efficace, et rapide à déployer : KinD, Kubernetes IN Docker.
 
 Distribution Kubernetes
+
+Et surtout : ça tourne bien dans des environnements automatisés comme la CI/CD.
+Justement, on va voir que l'on l’a intégré dans notre pipeline.
 ====
 
 == CI/CD : GitHub Action
@@ -29,18 +32,19 @@ image::github-action.png[]
 
 [NOTE.speaker]
 ====
-On a choisi KinD pour son côté léger et rapide, idéal pour simuler nos clusters sur un seul serveur.
+Tester à la main serait trop lent.
 
-Mais répéter ces tests à la main serait fastidieux.
+On a tout automatisé avec GitHub Actions.
 
-C’est pourquoi on automatise tout avec une pipeline CI/CD.
-
-Pourquoi utiliser GitHub action ?
+Pourquoi ?
 
 * "Gratuit"
 * VM temporaires avec 4 CPU pour simuler des missions
 
 => déploiement possible jusqu'à 14 clusters
+
+Mais automatiser les tests, c’est pas suffisant. Encore faut-il pouvoir déployer toute l’infra à la volée.
+
 ====
 
 == Infrastructure as code
@@ -49,9 +53,7 @@ image::iac.apng[]
 
 [NOTE.speaker]
 ====
-GitHub Actions, c’est parfait pour rejouer nos tests automatiquement à chaque changement.
-
-Mais il nous faut aussi un outil pour gérer **l’infrastructure elle-même** :
+Pour ça il nous faut aussi un outil pour gérer **l’infrastructure elle-même** :
 Créer, connecter et détruire 511 clusters — sans intervention manuelle.
 
 C’est là qu’intervient l’**Infrastructure as Code**.
@@ -123,6 +125,9 @@ cilium.ClustermeshConnection("cmeshConnect", destination_context="kind-cmesh2", 
 * langage de programmation
 
 🕶️ Décision : Python
+
+Maintenant qu’on maîtrise les bases, une question se pose… Et si on poussait un peu plus loin ? Et si on arrivait à créer 511 clusters ?
+
 ====
 
 == Tester les limites de KinD
@@ -130,8 +135,6 @@ image::15-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
-Souvent, à la fin d’un entraînement, on cherche à **pousser les limites** des outils utilisés.
-
 🎛️ Matériel utilisé :
 
 * 🖥️ 16 CPU — 🧠 32 Go de RAM

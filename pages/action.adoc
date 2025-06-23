@@ -26,7 +26,9 @@ image::service-quota.png[]
 
 [NOTE.speaker]
 ====
-💥 Premier obstacle : AWS bloque à **100 clusters max**.
+💥 Premier obstacle : Les limites AWS
+
+AWS bloque à **100 clusters max**.
 
 🎩 Tentative : négociation.
 
@@ -34,12 +36,7 @@ image::service-quota.png[]
 
 ✅ Résultat obtenu : **256 clusters** autorisés.
 
-🔥 OK, AWS ne nous laisse pas faire 511 clusters.
-
-Mais honnêtement, après nos premiers tests qui bloquaient à **15 clusters**,  
-🎯 **256**, c’est déjà un sacré objectif.
-
-Parlons maintenant des **bonnes pratiques AWS**… et de la réalité terrain.
+Mais pour les créer dans les temps, il va falloir ruser…
 ====
 
 == Bonnes pratiques vs Réalité opérationnelle
@@ -48,8 +45,6 @@ image::nodepool.apng[width=60%]
 
 [NOTE.speaker]
 ====
-Il faut bien faire attention à un autre paramètre : il ne faut pas suivre certaines bonnes pratiques AWS pour cette mission.
-
 Prenons un exemple.
 
 📘 Selon les bonnes pratiques AWS, pour créer des workers EKS, il faut :
@@ -64,9 +59,6 @@ Et dans une mission où chaque seconde compte,
 
 🎯 On va créer **directement des EC2**, sans passer par les surcouches d'AWS.
 
-C’est un anti-pattern ? Absolument.
-Mais c’est le seul moyen de rester dans la fenêtre de tir.
-
 👉 Allez, regardons maintenant l’architecture retenue pour aller jusqu’à 256 clusters.
 ====
 
@@ -76,13 +68,13 @@ image::aws-archi.svg[width=50%]
 
 [NOTE.speaker]
 ====
-Voici l'architecture que j'ai mis au point pour essayer de déployer jusqu'à 256 clusters Kubernetes.
-
 On a un compte AWS, un VPC, un réseau privé. À l'intérieur il contient 4 sous-réseaux 2 publics 2 privés.
 
 Dans les sous-réseaux public il y a une NAT Gateway pour pouvoir télécharger les images des containers depuis les sous-réseaux privés.
 
 Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un control plane.
+
+On avait évoqué le problème des connexions Cilium — il est temps de voir comment on l’a attaqué.
 ====
 
 == Parallélisation des connexions
@@ -90,8 +82,6 @@ Dans les réseaux privé, il y a les clusters EKS avec une seule EC2 et un contr
 image::connection-answer.apng[width=45%]
 [NOTE.speaker]
 ====
-On a vu l'architecture AWS qu'on va mettre en place. Mais il reste le problème des connexions Cilium.
-
 Je vous présente la première tentative pour paralléliser les connexions.
 
 La contrainte : pas de création des connexions d'un même cluster en parallèle

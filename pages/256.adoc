@@ -23,11 +23,13 @@ image::128-clusters.apng[width=70%]
 
 [NOTE.speaker]
 ====
-J'ai doublé la parallélisation des helm upgrade, passant de 7 à 14 pour avoir un comparatif intéressant.
+J'ai doublé la parallélisation des helm upgrade, passant de 7 à 14 pour gagner encore plus de temps.
 
-🧪 **3 essais** avant de réussir à passer ce cap symbolique.
+🧪 **3 essais** avant de réussir à passer ce cap.
 
-* **Temps des tests** : **environ 1 heure** 😅
+* **Temps des tests** : **environ 1 heure** => c'est probablement trop pour 511 clusters.
+
+En parlons de temps regardons en combien de temps s'est déroulé le déploiement.
 ====
 
 == !
@@ -51,6 +53,9 @@ J'ai doublé la parallélisation des helm upgrade, passant de 7 à 14 pour avoir
 
 [NOTE.speaker]
 ====
+Nous commençons à perdre du temps avec 128 clusters.
+
+Si la tendance continue, on pourrait connecter 511 clusters en seulement 10 minutes.
 ====
 
 == 🧨 Le mur des 256
@@ -97,3 +102,12 @@ image::256-clusters.apng[width=70%]
 | pass:[<strong><span style="color:#3366cc;">4 minutes 30</span></strong>]
 
 |===
+
+[NOTE.speaker]
+====
+Le temps de déploiement a doublé : logique on n'a pas pu déployer 256 clusters en parallèle.
+
+Au niveau des connexions, on a également perdu beaucoup de temps alors qu'on avait doublé le nombre de helm upgrade en parallèle.
+
+Si la tendance continue, on pourrait connecter 511 clusters en 9 minutes.
+====

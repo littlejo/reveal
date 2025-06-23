@@ -23,7 +23,7 @@ image::terminal-cilium-status.svg[]
 
 [NOTE.speaker]
 ====
-Ainsi avec les lignes de commande cilium status et cilium clustermesh status, cela permet d'avoir l'état du cluster.
+Ainsi on a les lignes de commande cilium status et cilium clustermesh status qui permettent d'avoir l'état du cluster.
 
 * trop verbeux
 * 🚫 pas une **preuve de connectivité**
@@ -78,7 +78,10 @@ cilium connectivity test --context cluster1 --multi-cluster cluster[2-511]
 
 [NOTE.speaker]
 ====
-Deux solutions s'offrent à moi
+Deux options s'offrent à moi :
+
+* La solution naturelle : modifier la cilium cli
+* La solution astucieuse : Terratest
 ====
 
 == Terratest
@@ -88,7 +91,7 @@ image::clustermesh-terratest.svg[width=80%]
 [NOTE.speaker]
 ====
 Terratest est un projet à l'origine pour tester du code Terraform
-La prise en main est facile mais il faut connaître le go
+La prise en main est facile mais il faut connaître le go. J'ai donc choisi cet outil.
 
 J'ai créé 5 tests différents.
 

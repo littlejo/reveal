@@ -73,7 +73,7 @@ Il faut plutôt généraliser la méthode pour n clusters que pour seulement 2 c
 * On va mettre à jour le deuxième clusters avec les données des autres clusters
 * Etc
 
-En théorie : pour 511 clusters on metterait environ une heure
+En théorie : pour 511 clusters on mettrait environ une heure
 ====
 
 == La Pull Request
@@ -92,6 +92,10 @@ image::32-clusters.apng[width=50%]
 [NOTE.speaker]
 ====
 Maintenant que la PR a été mergé, nous allons pouvoir tester cela sur un nombre important de clusters : 32.
+
+Nous voyons schématiquement la mise à jour de chaque cluster et de ses connexions.
+
+Le déploiement s'est bien passé mais en combien de temps ?
 ====
 
 == !
@@ -112,7 +116,9 @@ Maintenant que la PR a été mergé, nous allons pouvoir tester cela sur un nomb
 ====
 Voici les résultats du déploiement.
 
-Cependant je n'étais pas totalement satisfait. Les helm upgrade prennent beaucoup de temps. Pourquoi ne pas les paralléliser de façon mesurée.
+On met 5 minutes pour la création de connexion. Ce qui nous ferait environ 80 minutes pour 511 clusters probablement trop pour notre objectif de 4 heures.
+
+Les helm upgrade prennent beaucoup de temps. Pourquoi ne pas les paralléliser sans saturé le serveur.
 ====
 
 == Parallélisation
@@ -123,9 +129,7 @@ image::pr-2.png[]
 ====
 C'est l'objet de cette PR.
 
-En théorie : avec 32 tâches en parallèle on pourrait créer les connexions de 511 clusters en moins de 3 minutes
-
-Maintenant que la PR est mergé, on va tester cela sur 64 clusters.
+En suivant les durées observées avec 32 clusters : avec 16 tâches en parallèle on pourrait créer les connexions de 511 clusters en 5 minutes.
 ====
 
 == 🧪 **64 clusters**
@@ -134,8 +138,13 @@ image::64-clusters.apng[width=50%]
 
 [NOTE.speaker]
 ====
-Le déploiement s'est également bien passé avec 64 clusters en parallélisant 7 fois la tâche des helm upgrade.
+Maintenant que la PR est mergé, on va tester cela sur 64 clusters.
 
+Nous voyons schématiquement la mise à jour en parallèle de deux clusters et de ses connexions. Concernant le déploiement, on a paralléliser 7 fois fois la tâche des helm upgrades.
+
+Le déploiement s'est également bien passé avec 64 clusters.
+
+Voyons si cette optimisation va payer.
 ====
 
 == !
@@ -153,3 +162,12 @@ Le déploiement s'est également bien passé avec 64 clusters en parallélisant 
 | pass:[<strong><span style="color:#3366cc;">2 minutes</span></strong>]
 
 |===
+
+[NOTE.speaker]
+====
+Nous avont réussi à gagner 2 minutes sur le temps de déploiement de 64 clusters et 3 minutes sur le temps de création de connexion.
+
+Si la tendance continue, on pourrait connecter 511 clusters en seulement 16 minutes.
+
+👉 L’objectif des 4 heures semble être atteignable.
+====
