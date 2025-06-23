@@ -154,7 +154,7 @@ image::2-cluster-3.svg[]
 ====
 Phase 2 : connexion
 
-Les agents cilium récupère les données de cilium-clustermesh-api de l'autre cluster.
+Les agents cilium sont configurés pour récupèrer les données de cilium-clustermesh-api de l'autre cluster.
 ====
 
 == Relier 511 clusters

@@ -18,10 +18,8 @@ image::kind-logo.png[width=45%]
 
 [NOTE.speaker]
 ====
-On va utiliser un terrain d’exercice simple, efficace, et rapide à déployer : KinD, Kubernetes IN Docker.
-
-Distribution Kubernetes
-
+On utilise KinD : Kubernetes IN Docker.
+Distribution légère, parfaite pour simuler des clusters sur un seul serveur.
 Et surtout : ça tourne bien dans des environnements automatisés comme la CI/CD.
 Justement, on va voir que l'on l’a intégré dans notre pipeline.
 ====
@@ -39,11 +37,13 @@ On a tout automatisé avec GitHub Actions.
 Pourquoi ?
 
 * "Gratuit"
-* VM temporaires avec 4 CPU pour simuler des missions
+* VM temporaires avec 4 CPU pour simuler des opérations
 
 => déploiement possible jusqu'à 14 clusters
 
-Mais automatiser les tests, c’est pas suffisant. Encore faut-il pouvoir déployer toute l’infra à la volée.
+Mais lancer les tests automatiquement, c’est une chose.
+Encore faut-il pouvoir créer, connecter et détruire toute l’infra à la volée.
+Et pour ça…
 
 ====
 
@@ -53,10 +53,9 @@ image::iac.apng[]
 
 [NOTE.speaker]
 ====
-Pour ça il nous faut aussi un outil pour gérer **l’infrastructure elle-même** :
-Créer, connecter et détruire 511 clusters — sans intervention manuelle.
+…on a besoin d’un outil pour piloter l’infrastructure elle-même.
 
-C’est là qu’intervient l’**Infrastructure as Code**.
+C’est le rôle de l’Infrastructure as Code.
 
 * Terraform / Opentofu
 * Pulumi

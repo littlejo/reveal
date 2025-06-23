@@ -161,8 +161,31 @@ Je peux donc y aller avec confiance sur les 511 clusters !
 image::511-excel.png[width=70%]
 [NOTE.speaker]
 ====
-Les premiers déploiements sont des échecs.
+Les premiers déploiements sont des échecs :
+
+* Problèmes de cidr
+
+Quelques points d'inquiétudes :
+
+* Le déploiement des clusters EKS entre chaque région est très variable : de 15 minutes à 45 minutes.
+* Erreur déploiement similaire à ceux que j'ai eu pour 128 et 256 clusters
 ====
 
 == Dernier test
 
+[NOTE.speaker]
+====
+Tout s'est bien passé pour le dernier test...
+
+Sauf sur une région où un cluster n'est pas bien déployé.
+
+J'ai quand même testé sur les 6 autres régions :
+
+6x73 = 438 clusters ça aurait été déjà pas mal.
+
+La création des connexions a pris 1 h : le fait de créer les clusters sur différentes régions ralenti nous fait perdre énormément
+
+Malheureusement au moment des tests, il y avait des clusters qui n'étaient pas bien connectés.
+
+Cette dernière opération a coûté 156 $.
+====

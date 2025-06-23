@@ -4,7 +4,7 @@ image::mi-action.png[]
 //mi-4
 [NOTE.speaker]
 ====
-Maintenant que notre environnement d'entraînement est en place, Il est temps maintenant de **passer à l’action**, sur le terrain réel.
+Maintenant que notre environnement d'entraînement est en place, Il est temps maintenant de **passer à l’action**.
 ====
 
 == Choix stratégique : AWS EKS
@@ -26,7 +26,7 @@ image::service-quota.png[]
 
 [NOTE.speaker]
 ====
-💥 Premier obstacle : Les limites AWS
+💥 Premier obstacle : les limites AWS
 
 AWS bloque à **100 clusters max**.
 
@@ -47,15 +47,9 @@ image::nodepool.apng[width=60%]
 ====
 Prenons un exemple.
 
-📘 Selon les bonnes pratiques AWS, pour créer des workers EKS, il faut :
-
-* créer des Node Pools,
-* qui créent des ASG,
-* qui créent des EC2.
+📘 Selon les bonnes pratiques AWS, pour créer des workers EKS, il faut : créer des Node Pools, qui créent des ASG  qui créent des EC2.
 
 🚨 Sauf que tout ça prend un **temps fou**.
-
-Et dans une mission où chaque seconde compte,
 
 🎯 On va créer **directement des EC2**, sans passer par les surcouches d'AWS.
 

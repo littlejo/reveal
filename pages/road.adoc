@@ -141,7 +141,7 @@ image::64-clusters.apng[width=50%]
 ====
 Maintenant que la PR est mergé, on va tester cela sur 64 clusters.
 
-Nous voyons schématiquement la mise à jour en parallèle de deux clusters et de ses connexions. Concernant le déploiement, on a paralléliser 7 fois fois la tâche des helm upgrades.
+Nous voyons schématiquement la mise à jour en parallèle de deux clusters et de ses connexions. Concernant le déploiement, on a parallélisé 7 fois la tâche des helm upgrades.
 
 Le déploiement s'est également bien passé avec 64 clusters.
 
