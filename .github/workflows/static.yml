@@ -24,7 +24,7 @@ jobs:
           lfs: true
       - name: Pull LFS files
         run: git lfs pull
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '19'
       - run: npm ci
